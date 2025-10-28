@@ -1,26 +1,48 @@
 package exercise3;
 
-public class Car {
-  public int fuelLevel;
-  public int mileage;
-  public String licensePlate;
-  public String fuelConsumption;
-  public String fuelCapacity;
+import java.math.RoundingMode;
 
-  public Car(String zh420, int i, int i1, double v, int i2) {
+public class Car {
+  public double fuelLevel;
+  public double mileage;
+  public String licensePlate;
+  public double fuelConsumption;
+  public int fuelCapacity;
+
+  public Car(String licensePlate, double mileage, int fuelCapacity, double fuelConsumption, double fuelLevel) {
+      this.licensePlate = licensePlate;
+      this.mileage = mileage;
+      this.fuelCapacity = fuelCapacity;
+      this.fuelConsumption = fuelConsumption;
+      this.fuelLevel = fuelLevel;
   }
 
-  //declare vars
-
-  //Create constructor
-
   public void drive(int distance) {
-    //do stuff
+      double tempFuelLevel = fuelLevel - (fuelConsumption * distance);
+      double tempMileage = mileage + distance;
+
+      if (tempFuelLevel < 0){
+          tempMileage = mileage + (fuelLevel / fuelConsumption);
+          tempFuelLevel = 0;
+      }
+      fuelLevel = tempFuelLevel;
+      mileage = Math.round(tempMileage * 100d) / 100d;
   }
 
   public void refuel(int amount) {
-    //do stuff
+    fuelLevel += amount;
+    if (fuelLevel > fuelCapacity) {
+        fuelLevel = fuelCapacity;
+    }
   }
 
-  //add toString
+  public String toString() {
+      return "Car{" +
+              "licensePlate='" + licensePlate + '\'' +
+              ", mileage=" + mileage +
+              ", fuelConsumption=" + fuelConsumption +
+              ", fuelCapacity=" + fuelCapacity +
+              ", fuelLevel=" + fuelLevel +
+              '}';
+  }
 }
